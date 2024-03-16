@@ -34,7 +34,7 @@ resources = {
 
 
 def check_resources(drink_ingredients):
-    '''Returns True if there are enough ingredients to make the drink, False if not'''
+    """Returns True if there are enough ingredients to make the drink, False if not"""
     is_enough = True
     for item in drink_ingredients:
         if drink_ingredients[item] >= resources[item]:
@@ -45,7 +45,7 @@ def check_resources(drink_ingredients):
 
 
 def process_coins():
-    '''Returns total of the coins inserted'''
+    """Returns total of the coins inserted"""
     print("Please insert coins.")
     quarters = float(input("How many quarters? ")) * 0.25
     dimes = float(input("How many dimes? ")) * 0.10
@@ -56,8 +56,8 @@ def process_coins():
 
 
 def transaction_successful(cost, money_paid):
-    '''Returns True if money inserted is enough, False if not.'''
-    change = money_paid - cost
+    """Returns True if money inserted is enough, False if not."""
+    change = round(money_paid - cost, 2)
     is_successful = True
     if cost > money_paid:
         is_successful = False
@@ -68,11 +68,13 @@ def transaction_successful(cost, money_paid):
     return is_successful
 
 
-def make_coffee(resources, choice):
+def make_coffee(resources, chosen_drink):
+    """Deduct the used ingredients from the resources"""
     resources["water"] = resources["water"] - drink["ingredients"]["water"]
     resources["milk"] = resources["milk"] - drink["ingredients"]["milk"]
     resources["coffee"] = resources["coffee"] - drink["ingredients"]["coffee"]
-    print(f"Here is your {choice}! ☕")
+    print(f"Here is your {chosen_drink}! ☕")
+
 
 machine_on = True
 
@@ -92,7 +94,7 @@ while machine_on:
         drink = MENU[choice]
         if check_resources(drink["ingredients"]):
             money_inserted = process_coins()
-            cost_drink = MENU[choice]["cost"]
+            cost_drink = drink["cost"]
             if transaction_successful(cost_drink, money_inserted):
                 profit += cost_drink
                 make_coffee(resources, choice)
